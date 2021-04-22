@@ -17,4 +17,6 @@ class Restaurant extends Model
         'id_user'
     ];
     protected $primaryKey = 'id_restaurant';
+    public $incrementing = false;
+    public $timestamps = false;
 }

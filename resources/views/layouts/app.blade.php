@@ -10,7 +10,7 @@
           crossorigin="anonymous"/>
 
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
-
+    @yield("css")   
     @yield('third_party_stylesheets')
 
     @stack('page_css')
@@ -47,7 +47,7 @@
                     </li>
                     <!-- Menu Footer-->
                     <li class="user-footer">
-                        <a href="#" class="btn btn-default btn-flat">Profile</a>
+                        <a href="/perfil" class="btn btn-default btn-flat">Profile</a>
                         <a href="#" class="btn btn-default btn-flat float-right"
                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             Sign out
@@ -82,7 +82,7 @@
 </div>
 
 <script src="{{ mix('js/app.js') }}" defer></script>
-
+@yield("js")
 @yield('third_party_scripts')
 
 @stack('page_scripts')
