@@ -15,5 +15,6 @@ class Pictures extends Model
         'id_restaurant'
     ];
     protected $primaryKey = 'id_picture';
-
+    public $incrementing = false;
+    public $timestamps = false;
 }

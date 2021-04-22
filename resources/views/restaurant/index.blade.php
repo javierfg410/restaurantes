@@ -41,7 +41,7 @@
                             <tr>
                                 <td>{{$restaurante->id_restaurant}}</td>
                                 <td>
-                                    <a href="/restaurante/{{$restaurante->id_restaurant}}" class="btn btn-danger" >
+                                    <a href="/restaurante/{{$restaurante->id_restaurant}}" class="btn btn-link" >
                                         {{$restaurante->name}}
                                     </a>
                                 </td>
@@ -49,11 +49,108 @@
                                 <td>{{$restaurante->town}}</td>
                                 <td>{{$restaurante->country}}</td>
                                 <td width="100px">
+                                    <a href="#" class="btn btn-info" data-toggle="modal" data-target="#edit">
+                                        <i class="nav-icon fas fa-edit"></i>
+                                    </a>
                                     <a href="/delRess/{{$restaurante->id_restaurant}}" class="btn btn-danger" >
                                         <i class="nav-icon fas fa-ban"></i>
                                     </a>
                                 </td>
                             </tr>
+                            <div class="modal fade" id="edit"><!-- /.Ventana emergente crear-->
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <div class="row">
+                                                <div class="col-9">
+                                                    <h4>Editar</h4>
+                                                </div>
+                                                <div class="col-3">
+                                                    <button type="button" class="close" data-dismiss="modal">
+                                                        <span>×</span>
+                                                    </button>
+                                                </div>
+                                            </div>     
+                                        </div>
+                                        <div class="modal-body">
+                                            <form method="post" action="/editRess">
+                                                @csrf
+                                                <input name="id_restaurant" type="hidden" value="{{$restaurante->id_restaurant}}">
+                                                <div class="input-group mb-3">
+                                                    <input type="text"
+                                                           name="name"
+                                                           value=" {{$restaurante->name}}"
+                                                           class="form-control @error('name') is-invalid @enderror"
+                                                           placeholder="Nombre del restaurante" required>
+                                                    <div class="input-group-append">
+                                                        <div class="input-group-text"><span class="fas fa-user"></span></div>
+                                                    </div>
+                                                    @error('name')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                    @enderror
+                                                </div>
+                                                <div class="input-group mb-3">
+                                                    <input type="text"
+                                                           name="address"
+                                                           value=" {{$restaurante->address}}"
+                                                           class="form-control @error('address') is-invalid @enderror"
+                                                           placeholder="Dirección" required>
+                                                    <div class="input-group-append">
+                                                        <div class="input-group-text"><span class="fas fa-user"></span></div>
+                                                    </div>
+                                                    @error('address')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                    @enderror
+                                                </div>
+                                                <div class="input-group mb-3">
+                                                    <input type="text"
+                                                           name="town"
+                                                           value=" {{$restaurante->town}}"
+                                                           class="form-control @error('town') is-invalid @enderror"
+                                                           placeholder="Ciudad" required>
+                                                    <div class="input-group-append">
+                                                        <div class="input-group-text"><span class="fas fa-envelope"></span></div>
+                                                    </div>
+                                                    @error('town')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                    @enderror
+                                                </div>
+                                                <div class="input-group mb-3">
+                                                    <input type="text"
+                                                           name="country"
+                                                           value=" {{$restaurante->country}}"
+                                                           class="form-control @error('town') is-invalid @enderror"
+                                                           placeholder="País" required>
+                                                    <div class="input-group-append">
+                                                        <div class="input-group-text"><span class="fas fa-envelope"></span></div>
+                                                    </div>
+                                                    @error('country')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                    @enderror
+                                                </div>
+                                
+                                                <div class="row">
+                                                    <!-- /.col -->
+                                                    <div class="col-6">
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <button type="submit" class="btn btn-primary btn-block">Guardar</button>
+                                                    </div>
+                                                    <!-- /.col -->
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> <!-- /.Fin Ventana emergente -->  
                             @endforeach
                         </tbody>
                     </table>
@@ -72,7 +169,7 @@
             </div><!-- /.card-body -->
         </div><!-- /.card -->
     </div>
-    <div class="modal fade" id="create"><!-- /.Ventana emergente -->
+    <div class="modal fade" id="create"><!-- /.Ventana emergente crear-->
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">

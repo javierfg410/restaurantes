@@ -18,9 +18,14 @@ class UserController extends Controller
     }
     public function getUsers()
     {
-        $user = User::get();
+        if(Auth::user()->id == 1){
+            $users = User::get();
         
-        return $user;
+            return view('user.list', ['usuarios', $users]);
+        }else{
+            return view('user.perfil');
+        }
+        
     }
     public function getRole($id)
     {

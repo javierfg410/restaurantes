@@ -29,7 +29,19 @@ class RestaurantController extends Controller
         ]);
         return redirect("/restaurante");
     }
-    
+    public function editRess(Request $request)
+    {
+
+        $restaurant = Restaurant::where('id_restaurant', $request['id_restaurant'])
+        ->where('id_user', Auth::user()->id )
+        ->update([
+            'name' => $request['name'],
+            'address' => $request['address'],
+            'town' => $request['town'],
+            'country' => $request['country']
+        ]);
+        return redirect("/restaurante");
+    }
     public function delRess($id)
     {
         $restaurant = Restaurant::where('id_user', Auth::user()->id )->where('id_restaurant',$id )->first();
