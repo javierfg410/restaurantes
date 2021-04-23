@@ -2,6 +2,11 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\RestaurantController;
+use App\Http\Controllers\PicturesController;
+use App\Http\Controllers\auth\LoginController;
+use App\Http\Controllers\auth\RegisterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,4 +21,29 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});/*
+Route::get('/auth/logout', [LoginController::class, 'logout']);
+Route::get('/auth/users', [LoginController::class, 'users']);
+Route::post('/auth/register', [RegisterController::class, 'show']);
+Route::post('/auth/login', [LoginController::class, 'login']);*/
+Route::group([
+    'prefix' => 'auth'
+], function () {
+    Route::post('login', [LoginController::class, 'login']);
+    Route::post('register', [RegisterController::class, 'create']);
+
+    Route::group([
+      'middleware' => 'auth:api'
+    ], function() {
+        Route::get('logout', [LoginController::class, 'logout']);
+        Route::get('user', [LoginController::class, 'user']);
+    });
 });
+
+
+Route::resource('users',UserController::class);
+// resource recibe nos parámetros(URI del recurso, Controlador que gestionará las peticiones)
+Route::resource('restaurants', RestaurantController::class );   // Todos los métodos menos Edit que mostraría un formulario de edición.
+
+
+Route::resource('restaurants.pictures',PicturesController::class); 

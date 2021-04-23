@@ -14,11 +14,12 @@ use App\Http\Controllers\PicturesController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+/*
 Route::get('/', function () {
     return view('auth.login');
 });
-
+*/
+/*
 //Rutas de Usuario
 Route::get('/users', [UserController::class, 'getUsers']);
 Route::get('/user/{id}', [App\Http\Controllers\UserController::class, 'show']);
@@ -34,9 +35,10 @@ Route::delete('/restaurants/{restaurant_id}', [RestaurantController::class, 'del
 //Rutas de Imagenes
 Route::get('/restaurants/{restaurant_id}', [PicturesController::class, 'show']);
 Route::post('/restaurants/{restaurant_id}/pictures', [PicturesController::class, 'store']);
-Route::delete('/restaurants/{restaurant_id}/pictures/{picture_id}', [PicturesController::class, 'delete'])->name('pictures.destroy');
+Route::delete('/restaurants/{restaurant_id}/pictures/{picture_id}', [PicturesController::class, 'delete'])->name('pictures.destroy');*/
 
-
+/*
 Route::get('/home', [RestaurantController::class, 'index'])->name('home');
 
 Auth::routes();
+*/

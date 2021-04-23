@@ -32,6 +32,12 @@ class RestaurantController extends Controller
         ]);
         return redirect("/restaurants");
     }
+    //mostrar restaurantes
+    public function show($id)
+    {
+        $restaurant = Restaurant::where('id_restaurant',$id )->first();
+        return redirect("/restaurants");
+    }
     //actualizar restaurantes
     public function update(Request $request)
     {

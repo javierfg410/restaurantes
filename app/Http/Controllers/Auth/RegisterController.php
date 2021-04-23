@@ -9,8 +9,10 @@ use App\Models\RolesUser;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
+use App\Http\Controllers\BaseController as BaseController;
 
-class RegisterController extends Controller
+class RegisterController extends BaseController
 {
     /*
     |--------------------------------------------------------------------------
@@ -48,6 +50,8 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
+    /*
+    Borrado para pruebas
     protected function validator(array $data)
     {
         return Validator::make($data, [
@@ -56,7 +60,7 @@ class RegisterController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
-    }
+    }*/
 
     /**
      * Create a new user instance after a valid registration.
@@ -64,21 +68,29 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\Models\User
      */
-    protected function create(array $data)
+    protected function create(Request $request)
     {
-        $user = User::create([
-            'name' => $data['name'],
-            'lastname' => $data['lastname'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+        $request->validate([
+            'name' => 'required|string',
+            'lastname' => 'required|string',
+            'email' => 'required|string|email|unique:users',
+            'password' => 'required|string'
         ]);
-        $userId= User::where('email', $data['email'])->first()->id;
+
+        User::create([
+            'name' => $request->name,
+            'lastname' => $request->lastname,
+            'email' => $request->email,
+            'password' => Hash::make($request->password)
+        ]);
+        $userId = User::where('email', $request->email)->first();
         $role = RolesUser::create([
             'id_role' => "2",
-            'id_user' =>  $userId
+            'id_user' =>  $userId->id
         ]);
-        return $user;
-        
+        return response()->json([
+            'message' => 'Successfully created user!'
+        ], 201);
 
     }
 }

@@ -3,38 +3,55 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Carbon\Carbon;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Laravel\Passport\HasApiTokens;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Notifications\Notifiable;
+
 
 class LoginController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
-    |
-    */
+    public function login (Request $request) {
+        $request->validate([
+            'email' => 'required|string|email',
+            'password' => 'required|string',
+        ]);
 
-    use AuthenticatesUsers;
+        $credentials = request(['email', 'password']);
 
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected $redirectTo = RouteServiceProvider::HOME;
+        if (!Auth::attempt($credentials))
+            return response()->json([
+                'message' => 'Unauthorized'
+            ], 401);
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
+        $user = $request->user();
+        $tokenResult = $user->createToken('Personal Access Token');
+
+        $token = $tokenResult->token;
+        if ($request->remember_me)
+            $token->expires_at = Carbon::now()->addWeeks(1);
+        $token->save();
+
+        return response()->json([
+            'access_token' => $tokenResult->accessToken,
+            'token_type' => 'Bearer',
+            'expires_at' => Carbon::parse($token->expires_at)->toDateTimeString()
+        ]);
+    }  
+    public function logout (Request $request) {
+        $request->user()->token()->revoke();
+
+        return response()->json([
+            'message' => 'Successfully logged out'
+        ]);
+    } 
+    public function user(Request $request)
     {
-        $this->middleware('guest')->except('logout');
+        return response()->json($request->user());
     }
 }

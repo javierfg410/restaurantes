@@ -13,8 +13,9 @@ class UserController extends Controller
 {
     
   //Listar usuarios para el Admin, si no tiene ese rol, redirecciona al perfil de usuario
-    public function getUsers()
+    /*public function getUsers()
     {
+
         if(Auth::user()->id == 1){
             $users = User::where('id', "!=" , 1)->get();
             return view('user.list', ['usuarios'=> $users]);
@@ -22,14 +23,29 @@ class UserController extends Controller
             return view('user.perfil');
         }
         
+    }*/
+    public function index()
+    {
+        
+        if(Auth::user()->id == 1){
+            $users = User::where('id', "!=" , 1)->get();
+            
+        }else{
+            $users = Auth::user();
+           
+        }
+        return response()->json(['status'=>'ok', 'users'=>$users],200);
     }
     //Si esta registrado muestra el perfil de usuario, si no redirecciona al login
-    public function show($id)
-    {
-        if( isset( Auth::user()->id ) )
-            return view('user.perfil');
-        else
-            return view('auth.login');
+    public function show($id){
+
+            if(Auth::user()->id == 1){
+                $users = User::where('id' , $id)->get();
+                
+            }else{
+                $users = Auth::user(); 
+            }
+            return response()->json(['status'=>'ok', 'users'=>$users],200);
     }
     //Actualización de usuarios
     public function update(Request $request)
