@@ -19,8 +19,6 @@ class CreateRestaurantsTable extends Migration
             $table->string('address', 191)->nullable();
             $table->string('town', 191)->nullable();
             $table->string('country')->nullable();
-            $table->string('country')->nullable();
-            $table->string('country')->nullable();
             $table->unsignedBigInteger('id_user');
 
             $table->foreign('id_user')->references('id')->on('users');

@@ -26,7 +26,7 @@ class UserController extends Controller
     }*/
     public function index()
     {
-        
+       
         if(Auth::user()->id == 1){
             $users = User::where('id', "!=" , 1)->get();
             
@@ -34,6 +34,7 @@ class UserController extends Controller
             $users = Auth::user();
            
         }
+
         return response()->json(['status'=>'ok', 'users'=>$users],200);
     }
     //Si esta registrado muestra el perfil de usuario, si no redirecciona al login

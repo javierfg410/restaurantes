@@ -37,13 +37,16 @@ Route::group([
     ], function() {
         Route::get('logout', [LoginController::class, 'logout']);
         Route::get('user', [LoginController::class, 'user']);
+        Route::resource('users',UserController::class);
+        Route::resource('restaurants', RestaurantController::class );
+        Route::resource('restaurants.pictures',PicturesController::class);
     });
 });
+Route::group([
+    'middleware' => 'auth:api'
+  ], function() {
+      Route::resource('users',UserController::class);
+      Route::resource('restaurants', RestaurantController::class );
+      Route::resource('restaurants.pictures',PicturesController::class);
+  });
 
-
-Route::resource('users',UserController::class);
-// resource recibe nos parámetros(URI del recurso, Controlador que gestionará las peticiones)
-Route::resource('restaurants', RestaurantController::class );   // Todos los métodos menos Edit que mostraría un formulario de edición.
-
-
-Route::resource('restaurants.pictures',PicturesController::class); 
