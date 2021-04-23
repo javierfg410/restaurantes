@@ -17,13 +17,13 @@ class Roles extends Seeder
     public function run()
     {
         DB::table('roles')->insert([
-            'id' => '1',
+            'id_role' => '1',
             'name' => 'Admin',
             'description' => 'This user can control everything.',
         ]);
 
         DB::table('roles')->insert([
-            'id' => '2',
+            'id_role' => '2',
             'name' => 'Customer ',
             'description' => 'This user only controls their restaurants.',
         ]);
