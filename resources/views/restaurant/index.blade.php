@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('css')
-
+<!-- codigo CSS para Datatables -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
 @endsection
 
@@ -11,11 +11,12 @@
             <div class="card-header">
                 <h3 class="card-title">Restaurantes</h3>
                 <div class="card-tools">
-
                 </div><!-- /.card-tools -->
             </div><!-- /.card-header -->
             <div class="card-body">
                 <div class="container">
+                    <!-- Añadir restaurante deshabilitado para admin -->
+                    @if(Auth::user()->id != 1)
                     <div class="row">
                         <div class="col-12">
                             <a href="#" class="btn btn-success" data-toggle="modal" data-target="#create">
@@ -23,17 +24,17 @@
                             </a>
                         </div>
                     </div>
-                <!-- comienzo tabla -->
-                
+                    @endif
+                    <!-- comienzo tabla -->
                     <table id="restaurantes" class="table table-striped">
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Name</th>
-                                <th>address</th>
-                                <th>town</th>
-                                <th>country</th>
-                                <th width="100px">Action</th>
+                                <th>Nombre</th>
+                                <th>Dirección</th>
+                                <th>Ciudad</th>
+                                <th>Pais</th>
+                                <th width="100px">Acción</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -41,7 +42,7 @@
                             <tr>
                                 <td>{{$restaurante->id_restaurant}}</td>
                                 <td>
-                                    <a href="/restaurante/{{$restaurante->id_restaurant}}" class="btn btn-link" >
+                                    <a href="/restaurants/{{$restaurante->id_restaurant}}" class="btn btn-link" >
                                         {{$restaurante->name}}
                                     </a>
                                 </td>
@@ -49,15 +50,18 @@
                                 <td>{{$restaurante->town}}</td>
                                 <td>{{$restaurante->country}}</td>
                                 <td width="100px">
-                                    <a href="#" class="btn btn-info" data-toggle="modal" data-target="#edit">
+                                    @if(Auth::user()->id == 1 || Auth::user()->id == $restaurante->id_user)
+                                    <a href="#" class="btn btn-info btn-block" data-toggle="modal" data-target="#edit{{$restaurante->id_restaurant}}">
                                         <i class="nav-icon fas fa-edit"></i>
                                     </a>
-                                    <a href="/delRess/{{$restaurante->id_restaurant}}" class="btn btn-danger" >
-                                        <i class="nav-icon fas fa-ban"></i>
-                                    </a>
+                                    
+                                    {{ Form::open( [ 'route' => ['restaurants.destroy' , $restaurante->id_restaurant ], 'method' => 'DELETE' ] ) }}
+                                    <button type="submit" class="btn btn-danger btn-block"><i class="nav-icon fas fa-ban"></i></button>
+                                    {{ Form::close()}}
+                                    @endif
                                 </td>
                             </tr>
-                            <div class="modal fade" id="edit"><!-- /.Ventana emergente crear-->
+                            <div class="modal fade" id="edit{{$restaurante->id_restaurant}}"><!-- /.Ventana emergente crear-->
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -73,7 +77,7 @@
                                             </div>     
                                         </div>
                                         <div class="modal-body">
-                                            <form method="post" action="/editRess">
+                                            {{ Form::open( [ 'route' => ['restaurants.update' , $restaurante->id_restaurant ], 'method' => 'PUT' ] ) }}
                                                 @csrf
                                                 <input name="id_restaurant" type="hidden" value="{{$restaurante->id_restaurant}}">
                                                 <div class="input-group mb-3">
@@ -146,7 +150,7 @@
                                                     </div>
                                                     <!-- /.col -->
                                                 </div>
-                                            </form>
+                                            {{ Form::close()}}
                                         </div>
                                     </div>
                                 </div>
@@ -161,7 +165,28 @@
 
                     <script>
                         $(document).ready(function() {
-                            $('#restaurantes').DataTable();
+                            $('#restaurantes').DataTable({
+                                language: {
+                                    "decimal": "",
+                                    "emptyTable": "No hay información",
+                                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                                    "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                                    "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                                    "infoPostFix": "",
+                                    "thousands": ",",
+                                    "lengthMenu": "Mostrar _MENU_ Entradas",
+                                    "loadingRecords": "Cargando...",
+                                    "processing": "Procesando...",
+                                    "search": "Buscar:",
+                                    "zeroRecords": "Sin resultados encontrados",
+                                    "paginate": {
+                                        "first": "Primero",
+                                        "last": "Ultimo",
+                                        "next": "Siguiente",
+                                        "previous": "Anterior"
+                                    }
+                                }
+                            });
                         } );
                     </script>
                     @endsection
@@ -185,7 +210,7 @@
                     </div>     
                 </div>
                 <div class="modal-body">
-                    <form method="post" action="/addRess">
+                    <form method="post" action="/restaurants">
                         @csrf
         
                         <div class="input-group mb-3">

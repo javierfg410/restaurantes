@@ -20,11 +20,10 @@ class RoleController extends Controller
         
         return $role;
     }
+
     public function getUser($id)
     {
-        
         $role = Role::where('id_role', $id)->first();
-        dd($role->user);
         return $role->user;
     }
 
