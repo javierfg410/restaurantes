@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
+use Database\Seeders\Roles;
+use Database\Seeders\UserAdmin;
 
 class DatabaseSeeder extends Seeder
 {
