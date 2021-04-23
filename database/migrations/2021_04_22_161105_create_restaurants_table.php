@@ -14,9 +14,18 @@ class CreateRestaurantsTable extends Migration
     public function up()
     {
         Schema::create('restaurants', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->id('id_restaurant');
+            $table->string('name' , 191)->nullable();
+            $table->string('address', 191)->nullable();
+            $table->string('town', 191)->nullable();
+            $table->string('country')->nullable();
+            $table->string('country')->nullable();
+            $table->string('country')->nullable();
+            $table->unsignedBigInteger('id_user');
+
+            $table->foreign('id_user')->references('id')->on('users');
         });
+      
     }
 
     /**

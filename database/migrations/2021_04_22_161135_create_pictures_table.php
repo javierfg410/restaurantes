@@ -14,8 +14,12 @@ class CreatePicturesTable extends Migration
     public function up()
     {
         Schema::create('pictures', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->id('id_picture');
+            $table->string('url', 255)->nullable();
+            $table->string('path', 255)->nullable();
+            $table->unsignedBigInteger('id_restaurant');
+
+            $table->foreign('id_restaurant')->references('id_restaurant')->on('restaurants');
         });
     }
 
