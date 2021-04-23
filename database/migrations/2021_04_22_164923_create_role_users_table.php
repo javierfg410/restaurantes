@@ -18,8 +18,7 @@ class CreateRoleUsersTable extends Migration
             $table->bigInteger('id_user');
             $table->primary(['id_role','id_user']);
             
-            $table->foreign('id_role')->references('id_role')->on('roles');
-            $table->foreign('id_user')->references('id')->on('users');
+
         });
     }
 
