@@ -1,62 +1,116 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+<p align="center">Code test: Aplicación Almacén de restaurantes</p>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+## Sobre la Aplicacion
+ <h1>Requerimientos</h1>
+ 
+    PHP 7.4
+    Mysql 8.0
+    Laravel 8
+<h1>Enunciado</h1>
+<p>
+Se requiere crear una api en laravel que resuelva la necesidad de una empresa de
+publicidad de almacenar distintos datos sobre restaurantes de sus clientes.
+Para ello cada cliente podrá registrarse en el sistema como usuario con rol ‘customer’,
+autenticarse, añadir un número ilimitado de restaurantes al sistema con un máximo de 5
+fotos por cada restaurante.
 </p>
+<h1>ROLES</h1>
+<p>Campos</p>
+<ul>
+  <li>name: string</li>
+  <li>description: string</li>
+</ul>
+<p>
+Cada ‘role’ puede tener [0 || 1 || n] ‘users’.
+Los roles se crearán durante la instalación del sistema y no se pueden editar ni
+eliminar.
+</p>
+<h2>Datos iniciales:</h2>
+<h3>id: 1 | name: Admin | description: This user can control everything.</h3>
+<p>Puede</p>
+<ul>
+  <li>Listar, ver, editar y eliminar todos los usuarios.</li>
+  <li>Listar, ver, editar y eliminar todos los restaurantes.</li>
+  <li>Listar, ver, editar y eliminar todas las imágenes de un restaurante.</li>
+</ul>
+<p>No puede</p>
+<ul>
+  <li>Crear usuarios</li>
+  <li>Crear restaurantes</li>
+  <li>Crear imágenes de un restaurante</li>
+</ul>
+<h3>id: 2 | name: Customer | description: This user only controls their restaurants.</h3>
+<p>Puede</p>
+<ul>
+  <li>Ver, editar y eliminar solo su usuario.</li>
+  <li>Listar y ver, todos los restaurantes.</li>
+  <li>Listar y ver todas las imágenes de un restaurante.</li>
+  <li>Crear, editar y eliminar sólo sus restaurantes.</li>
+  <li>Crear, editar y eliminar imágenes sólo de sus restaurantes.</li>
+</ul>
+<p>No puede</p>
+<ul>
+  <li>Crear usuarios</li>
+  <li>Listar, ver, editar y eliminar usuarios que no sean suyos.</li>
+  <li>Editar y eliminar restaurantes que no sean suyos.</li>
+  <li>Editar y eliminar imágenes de un restaurante que no sea suyo.</li>
+</ul>
 
-## About Laravel
+<h1>USERS</h1>
+<h2>Campos</h2>
+<ul>
+  <li>name: string</li>
+  <li>lastname: string</li>
+  <li>email: string</li>
+  <li>password: string</li>
+</ul>
+<p>
+Un usuario se creará mediante un registro. Todos los usuarios registrados tienen rol
+‘Customer’ (id:2) obligatoriamente. Solo habrá un usuario de tipo ‘Admin’ (id:1)
+definido durante la instalación del sistema.
+Todos los datos son obligatorios y ninguno puede quedar vacío.
+</p>
+<h2>Datos iniciales</h2>
+<p>id: 1 | role_id: 1 | name: Admin | lastname: Admin | email: admin@example.com | password: 12345678</p>
+<h1>RESTAURANTS</h1>
+<h2>Campos</h2>
+<ul>
+  <li>name: string</li>
+  <li>address: string</li>
+  <li>town: string</li>
+  <li>country: string</li>
+</ul>
+<p>Un usuario puede crear de 0 a N restaurantes y para cada restaurante es obligatorio
+rellenar todos sus datos.</p>
+<h1>PICTURES</h1>
+<h2>Campos</h2>
+<ul>
+  <li>url: string</li>
+  <li>path: string</li>
+</ul>
+<p>
+Un usuario puede crear de 0 a 5 imágenes por cada restaurante. Las imágenes
+deben listarse en cada restaurante.
+</p>
+<h1>Revisión</h1>
+<p>La prueba se revisará usando Postman y comprobando los siguientes enlaces:</p>
+<ul>
+  <li>{domain}/auth/register [POST] (register)</li>
+  <li>{domain}/auth/login [POST] (login)</li>
+  <li>{domain}/auth/logout [GET] (logout)</li>
+  <li>{domain}/users [GET] (list)</li>
+  <li>{domain}/users/{user_id} [GET] (show)</li>
+  <li>{domain}/users/{user_id} [PUT] (update)</li>
+  <li>{domain}/users/{user_id} [DELETE] (delete)</li>
+  <li>{domain}/restaurants [GET] (list)</li>
+  <li>{domain}/restaurants [POST] (store)</li>
+  <li>{domain}/restaurants/{restaurant_id} [GET] (show)</li>
+  <li>{domain}/restaurants/{restaurant_id} [PUT] (update)</li>
+  <li>{domain}/restaurants/{irestaurant_id} [DELETE] (delete)</li>
+  <li>{domain}/restaurants/{restaurant_id}/pictures [POST] (store)</li>
+  <li>{domain}/restaurants/{restaurant_id}/pictures/{picture_id} [DELETE] (delete)</li>
+</ul>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+<h1>Modelo relacional creado para la aplicación</h1>
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+<a href="https://drive.google.com/uc?export=view&id=19qvXD0S1zKC7dbGLUzDtSQnZfSnz_7Tv"><img src="https://drive.google.com/uc?export=view&id=19qvXD0S1zKC7dbGLUzDtSQnZfSnz_7Tv" style="width: 500px; max-width: 100%; height: auto" title="Click for the larger version." /></a>
