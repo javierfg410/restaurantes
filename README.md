@@ -118,7 +118,7 @@ deben listarse en cada restaurante.
 <h1>Instalación y puesta a punto</h1>
 <p> Para el correcto funcionamiento de la aplicación es necesario seguir los siguientes pasos:</p>
 <h2>Descargar repositorio de GitHub</h2>
-<p>Para descargar el repositorio es necesario introducir el siguiente comando en el terminall (teniendo intalado <a href="https://git-scm.com/book/es/v2/Inicio---Sobre-el-Control-de-Versiones-Instalaci%C3%B3n-de-Git">git</a>)</p>
+<p>Para descargar el repositorio es necesario introducir el siguiente comando en el terminal (teniendo intalado <a href="https://git-scm.com/book/es/v2/Inicio---Sobre-el-Control-de-Versiones-Instalaci%C3%B3n-de-Git">git</a>)</p>
     $ git clone https://github.com/javierfg410/restaurantes.git
 <h2>Descargar/instalar las dependencias</h2>
 <p>Para ello usaremos el siguiente comando de <a href="https://getcomposer.org/download/">Composer</a></p>
