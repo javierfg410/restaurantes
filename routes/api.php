@@ -23,15 +23,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 */
-/*
-Route::get('/auth/logout', [LoginController::class, 'logout']);
-Route::get('/auth/users', [LoginController::class, 'users']);
-Route::post('/auth/register', [RegisterController::class, 'show']);
-Route::post('/auth/login', [LoginController::class, 'login']);*/
-Route::prefix('auth')->group(function () {
-    Route::post('login', [LoginController::class, 'login']);
-    Route::post('register', [RegisterController::class, 'create']);
-
+Route::prefix('auth')->group(function () {  
+    Route::middleware('guest:api')->group(function () {
+        Route::post('login', [LoginController::class, 'login']);
+        Route::post('register', [RegisterController::class, 'create']);
+    });
     Route::middleware('auth:api')->group(function () {
         Route::get('logout', [LoginController::class, 'logout']);
         Route::get('user', [LoginController::class, 'user']);
@@ -39,8 +35,17 @@ Route::prefix('auth')->group(function () {
 
 });
 Route::middleware('auth:api')->group(function () {
-    Route::resource('users',UserController::class);
-    Route::resource('restaurants', RestaurantController::class );
-    Route::resource('restaurants.pictures',PicturesController::class);
+    Route::resource('users', UserController::class, 
+    [
+        'except' => ['create']
+    ] );
+    Route::resource('restaurants', RestaurantController::class , 
+    [
+        'except' => ['edit','create']
+    ] );
+    Route::resource('restaurants.pictures',PicturesController::class , 
+    [
+        'except' => ['edit', 'create','update']
+    ]);
 });
 

@@ -22,6 +22,10 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\Models\User
      */
+    public function __construct()
+    {
+        $this->middleware('guest');
+    }
     protected function create(Request $request){
 /*
 Codigo pensado para que si tienes un token no puedas registrarse
