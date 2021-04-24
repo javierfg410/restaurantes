@@ -114,3 +114,37 @@ deben listarse en cada restaurante.
 <h1>Modelo relacional creado para la aplicación</h1>
 
 <a href="https://drive.google.com/uc?export=view&id=19qvXD0S1zKC7dbGLUzDtSQnZfSnz_7Tv"><img src="https://drive.google.com/uc?export=view&id=19qvXD0S1zKC7dbGLUzDtSQnZfSnz_7Tv" style="width: 500px; max-width: 100%; height: auto" title="Click for the larger version." /></a>
+
+<h1>Instalación y puesta a punto</h1>
+<p> Para el correcto funcionamiento de la aplicación es necesario seguir los siguientes pasos</p>
+<h2>Descargar repositorio de GitHub</h2>
+<p>Para descargar el repositorio es necesario introducir el siguiente comando en el simbolo de sistema o powershell (teniendo intalado <a href="https://git-scm.com/book/es/v2/Inicio---Sobre-el-Control-de-Versiones-Instalaci%C3%B3n-de-Git">git</a>)</p>
+    $ git clone https://github.com/javierfg410/restaurantes.git
+<h2>Descargar/instalar las dependencias</h2>
+<p>Para ello usaremos el siguiente comando de <a href="https://getcomposer.org/download/">Composer</a></p>
+    $ composer install
+<h2>Configuracion de la base de datos</h2>
+<h3>Configuracion del archivo .env</h3>
+<p>Dentro de la carpeta raiz, encontraras un archivo con el nombre ".env.example", renombralo a ".env", abre el archivo y comprueba que contiene los siguientes datos</p>
+
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=restaurantes
+    DB_USERNAME=root
+    DB_PASSWORD=
+<h3>Configuracion de la base de datos</h3>
+<p>Para seguir en este paso es necesario tener instalado servidor de Base de datos (puede valer <a href="https://www.apachefriends.org/es/download.html">XAMPP</a>) y crear una base de datos con el nombre "restaurantes"</p>
+<h3>Migraciones</h3>
+<p>Para las migrar las tablas a la base de datos es necesario volver a la terminal y escribir el siguiente comando</p>
+    php artisan migrate
+<p>Si la instalación ha sido correcta, podra ver en la base de datos todas las tablas creadas para el proyecto</p>
+<h3>Seeding</h3>
+<p>Para esta aplicación es necesario incluir una serie de datos ("usuario" y "roles") para ello, introduciremos el siguiente comando en el terminal </p>
+    php artisan db:seed
+<p>si la instalación ha sido correcta, podra ver en las tablas "users", "roles" y "roles_users" los datos que necesitaremos para el proyecto</p>
+<h2>Laravel Passport</h2>
+<p>Para poder guardar los tokens mientras se realizan las pruebas, es necesario ejecutar el siguiente comando en el terminal</p>
+    php artisan passport:install
+
+<p>Una vez terminado estos pasos, la aplicación deberia responder correctamente
