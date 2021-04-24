@@ -119,10 +119,14 @@ deben listarse en cada restaurante.
 <p> Para el correcto funcionamiento de la aplicación es necesario seguir los siguientes pasos:</p>
 <h2>Descargar repositorio de GitHub</h2>
 <p>Para descargar el repositorio es necesario introducir el siguiente comando en el terminal (teniendo intalado <a href="https://git-scm.com/book/es/v2/Inicio---Sobre-el-Control-de-Versiones-Instalaci%C3%B3n-de-Git">git</a>)</p>
+
     $ git clone https://github.com/javierfg410/restaurantes.git
+
 <h2>Descargar/instalar las dependencias</h2>
 <p>Para ello usaremos el siguiente comando de <a href="https://getcomposer.org/download/">Composer</a></p>
+
     $ composer install
+
 <h2>Configuración de la base de datos</h2>
 <h3>Configuración del archivo .env</h3>
 <p>Dentro de la carpeta raíz, encontrarás un archivo con el nombre ".env.example", renómbralo a ".env", abre el archivo y comprueba que contiene los siguientes datos</p>
@@ -137,14 +141,21 @@ deben listarse en cada restaurante.
 <p>Para seguir en este paso es necesario tener instalado servidor de Base de datos (puede valer <a href="https://www.apachefriends.org/es/download.html">XAMPP</a>) y crear una base de datos con el nombre "restaurantes"</p>
 <h3>Migraciones</h3>
 <p>Para migrar las tablas a la base de datos es necesario volver al terminal y escribir el siguiente comando</p>
+
     $ php artisan migrate
+
 <p>Si la instalación ha sido correcta, podrá ver en la base de datos todas las tablas creadas para el proyecto</p>
 <h3>Seeding</h3>
 <p>Para esta aplicación es necesario incluir una serie de datos ("usuario" y "roles") para ello, introduciremos el siguiente comando en el terminal </p>
+
     php artisan db:seed
+
 <p>si la instalación ha sido correcta, podrá ver en las tablas "users", "roles" y "roles_users" los datos que necesitaremos para el proyecto</p>
 <h2>Laravel Passport</h2>
 <p>Para poder guardar los tokens mientras se realizan las pruebas, es necesario ejecutar el siguiente comando en el terminal</p>
+
     $ php artisan passport:install
 
-<p>Una vez terminado estos pasos, la aplicación debería responder correctamente
+<p>Una vez terminado estos pasos, la aplicación debería responder correctamente arrancando el servidor con el comando:</p>
+
+    $ php artisan serve
