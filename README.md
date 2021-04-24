@@ -156,6 +156,11 @@ deben listarse en cada restaurante.
 
     $ php artisan passport:install
 
+<p>Para generar la key inicial es necesario ejecutar el siguiente comando</p>
+
+    $ php artisan key:generate
+
 <p>Una vez terminado estos pasos, la aplicación debería responder correctamente arrancando el servidor con el comando:</p>
 
     $ php artisan serve
+
